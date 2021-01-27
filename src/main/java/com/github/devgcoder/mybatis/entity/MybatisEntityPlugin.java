@@ -1,13 +1,13 @@
-package com.github.devg.mybatis.entity;
+package com.github.devgcoder.mybatis.entity;
 
-import com.github.devg.mybatis.entity.proxy.MybatisEntityDeleteByMap;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityInsertList;
-import com.github.devg.mybatis.entity.proxy.MybatisEntitySelectList;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityUpdateByMap;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityDelete;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityInsert;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityProxy;
-import com.github.devg.mybatis.entity.proxy.MybatisEntityUpdate;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDeleteByMap;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsertList;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectList;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityUpdateByMap;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDelete;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsert;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityProxy;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityUpdate;
 import java.util.Map;
 import java.util.Properties;
 import org.apache.ibatis.cache.CacheKey;

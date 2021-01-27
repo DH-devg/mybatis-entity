@@ -1,4 +1,4 @@
-package com.github.devg.mybatis.entity.annos;
+package com.github.devgcoder.mybatis.entity.annos;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -9,7 +9,7 @@
     <version>2.1.0.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.github.devg</groupId>
+  <groupId>com.github.devgcoder</groupId>
   <artifactId>mybatis-entity</artifactId>
   <version>1.0.1</version>
   <name>mybatis-entity</name>

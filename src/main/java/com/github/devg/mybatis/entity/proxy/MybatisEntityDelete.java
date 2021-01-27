@@ -1,7 +1,7 @@
-package com.org.devg.mybatis.entity.proxy;
+package com.github.devg.mybatis.entity.proxy;
 
-import com.org.devg.mybatis.entity.annos.TableField;
-import com.org.devg.mybatis.entity.annos.TableName;
+import com.github.devg.mybatis.entity.annos.TableField;
+import com.github.devg.mybatis.entity.annos.TableName;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,21 +12,18 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.plugin.Invocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author duheng
- * @Date 2021/1/23 16:25
+ * @Date 2021/1/23 11:11
  */
-public class MybatisEntityUpdateByMap implements MybatisEntityInvoke {
+public class MybatisEntityDelete implements MybatisEntityInvoke {
 
-	public static final String ENTITY = "mybatisEntity";
-	public static final String WHEREMAP = "mybatisEntityWhereMap";
+	public static final String DELETEMYBATISENTITY = "deleteMybatisEntity";
 
 	private Invocation invocation;
 
-	public MybatisEntityUpdateByMap(Invocation invocation) {
+	public MybatisEntityDelete(Invocation invocation) {
 		this.invocation = invocation;
 	}
 
@@ -36,46 +33,27 @@ public class MybatisEntityUpdateByMap implements MybatisEntityInvoke {
 		Executor executor = (Executor) invocation.getTarget();
 		Object parameterArgs = invocation.getArgs()[1];
 		Map<String, Object> paramsMap = (Map<String, Object>) parameterArgs;
-		Object parameterObject = paramsMap.get(ENTITY);
-		Map<String, Object> paramWhereMap = (Map<String, Object>) paramsMap.get(WHEREMAP);
+		Object parameterObject = paramsMap.get(DELETEMYBATISENTITY);
 		Class clazz = parameterObject.getClass();
 		TableName tableName = (TableName) clazz.getAnnotation(TableName.class);
-		int i = 0;
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		Map<String, Object> params = new HashMap<>();
 		StringBuffer sqlBuffer = new StringBuffer();
-		sqlBuffer.append("UPDATE ").append(tableName.value()).append(" SET ");
+		sqlBuffer.append("DELETE FROM ").append(tableName.value()).append(" WHERE ");
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field field : fields) {
 			TableField fieldName = field.getAnnotation(TableField.class);
+			boolean isId = fieldName.isId();
+			if (!isId) {
+				continue;
+			}
 			if (fieldName != null) {
 				String cloumnName = fieldName.value();
 				Object result = MybatisEntityProxy.getFieldValue(clazz, field, parameterObject);
-				if (null == result) {
-					// 为空的字段不更新
-					continue;
-				}
+				sqlBuffer.append(cloumnName).append("=?");
 				params.put(field.getName(), result);
-				if (i > 0) {
-					sqlBuffer.append(",");
-				}
-				sqlBuffer.append(cloumnName).append("=").append("?");
 				parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), field.getName(), field.getType()).build());
-				i++;
-			}
-		}
-		if (null != paramWhereMap && !paramWhereMap.isEmpty()) {
-			sqlBuffer.append(" WHERE ");
-			int j = 0;
-			for (String key : paramWhereMap.keySet()) {
-				Object value = paramWhereMap.get(key);
-				if (j > 0) {
-					sqlBuffer.append(" AND ");
-				}
-				sqlBuffer.append(key).append("=?");
-				parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), key, value.getClass()).build());
-				params.put(key, value);
-				j++;
+				break;
 			}
 		}
 		String sql = sqlBuffer.toString();

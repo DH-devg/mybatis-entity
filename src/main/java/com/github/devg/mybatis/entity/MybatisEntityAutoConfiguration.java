@@ -1,4 +1,4 @@
-package com.org.devg.mybatis.entity;
+package com.github.devg.mybatis.entity;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;

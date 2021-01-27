@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.org.devg.mybatis.entity.MybatisEntityAutoConfiguration
+com.github.devg.mybatis.entity.MybatisEntityAutoConfiguration

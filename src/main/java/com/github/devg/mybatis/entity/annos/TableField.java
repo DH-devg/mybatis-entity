@@ -1,4 +1,4 @@
-package com.org.devg.mybatis.entity.annos;
+package com.github.devg.mybatis.entity.annos;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,14 +9,19 @@ import java.lang.annotation.Target;
 
 /**
  * @author duheng
- * @Date 2021/1/12 18:38
+ * @Date 2021/1/12 18:39
  */
 @Inherited
 @Documented
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TableName {
+public @interface TableField {
 
   String value() default "";
 
+  boolean isId() default false;
+
+  boolean useGeneratedKeys() default false;
+
+  boolean noneNotInsert() default false;
 }

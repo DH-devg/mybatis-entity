@@ -1,4 +1,4 @@
-package com.org.devg.mybatis.entity.proxy;
+package com.github.devg.mybatis.entity.proxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

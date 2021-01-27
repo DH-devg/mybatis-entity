@@ -1,7 +1,7 @@
-package com.org.devg.mybatis.entity.proxy;
+package com.github.devg.mybatis.entity.proxy;
 
-import com.org.devg.mybatis.entity.annos.TableField;
-import com.org.devg.mybatis.entity.annos.TableName;
+import com.github.devg.mybatis.entity.annos.TableField;
+import com.github.devg.mybatis.entity.annos.TableName;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.org.devg.mybatis.entity.proxy;
+package com.github.devg.mybatis.entity.proxy;
 
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;

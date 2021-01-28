@@ -11,7 +11,7 @@
   </parent>
   <groupId>com.github.devgcoder</groupId>
   <artifactId>mybatis-entity</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <name>mybatis-entity</name>
   <description>Demo project for Spring Boot</description>
 
@@ -152,6 +152,20 @@
             </executions>
           </plugin>
         </plugins>
+        <resources>
+          <resource>
+            <directory>src/main/java</directory>
+            <includes>
+              <include>**/*.xml</include>
+            </includes>
+          </resource>
+          <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+              <include>**/*</include>
+            </includes>
+          </resource>
+        </resources>
       </build>
       <!-- 【注】snapshotRepository 与 repository 中的 id 一定要与 setting.xml 中 server 的 id 保持一致！ -->
       <distributionManagement>

@@ -1,5 +1,6 @@
 package com.github.devgcoder.mybatis.entity.utils;
 
+import com.github.devgcoder.mybatis.entity.annos.TableField;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,23 @@ public class MybatisEntityUtil {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+
+	public static String getIdCloumnName(Class clazz) {
+		String idCloumnName = null;
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			TableField fieldName = field.getAnnotation(TableField.class);
+			if (fieldName == null) {
+				continue;
+			}
+			boolean isId = fieldName.isId();
+			if (isId) {
+				idCloumnName = field.getName();
+				break;
+			}
+		}
+		return idCloumnName;
 	}
 
 }

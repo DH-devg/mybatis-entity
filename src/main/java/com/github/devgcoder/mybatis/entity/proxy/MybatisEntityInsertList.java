@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
@@ -49,7 +50,7 @@ public class MybatisEntityInsertList implements MybatisEntityInvoke {
 		String idName = null;
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		Map<String, Object> additionalParametersMap = new HashMap<>();
-		Map<String, Object> params = new HashMap<>();
+		Map<String, Object> params = new ParamMap<>();
 		List<Map<String, Object>> collection = new ArrayList<>();
 		Object mybatisEntity = mybatisEntityList.get(0);
 		Class clazz = mybatisEntity.getClass();
@@ -145,7 +146,7 @@ public class MybatisEntityInsertList implements MybatisEntityInvoke {
 			Class objClazz = object.getClass();
 			Field idField = objClazz.getDeclaredField(idName);
 			idField.setAccessible(true);
-			idField.set(object, resultMap.get(idName));
+			idField.set(object, getIdValue(idField, resultMap));
 			idNum++;
 		}
 		return result;

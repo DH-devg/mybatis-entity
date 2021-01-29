@@ -96,10 +96,9 @@ public class MybatisEntityInsert implements MybatisEntityInvoke {
 		if (null == idName || !useGeneratedKeys) {
 			return result;
 		}
-		Long idValue = params.get(idName) == null ? null : Long.valueOf(params.get(idName).toString());
 		Field idField = clazz.getDeclaredField(idName);
 		idField.setAccessible(true);
-		idField.set(parameterObject, idValue);
+		idField.set(parameterObject, getIdValue(idField, params));
 		return result;
 	}
 }

@@ -1,9 +1,7 @@
 package com.github.devgcoder.mybatis.entity.service;
 
-import com.github.devgcoder.mybatis.entity.annos.TableField;
 import com.github.devgcoder.mybatis.entity.mapper.MybatisEntityMapper;
 import com.github.devgcoder.mybatis.entity.utils.MybatisEntityUtil;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

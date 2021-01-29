@@ -93,10 +93,10 @@ public class MybatisEntityProxy {
 			Object parameterObject = invocation.getArgs()[1];
 			if (parameterObject instanceof Map) {
 				Map<String, Object> paramsMap = (Map<String, Object>) parameterObject;
-				if (paramsMap.containsKey(MybatisEntitySelectList.SELECTWHERE) && paramsMap.containsKey(MybatisEntitySelectList.SELECTCLASS)) {
+				if (paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPWHERE) && paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPCLASS)) {
 					try {
-						MybatisEntitySelectList mybatisEntitySelectList = new MybatisEntitySelectList(invocation);
-						return mybatisEntitySelectList.invoke();
+						MybatisEntitySelectMapList mybatisEntitySelectMapList = new MybatisEntitySelectMapList(invocation);
+						return mybatisEntitySelectMapList.invoke();
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error entity deleteByMap.  Cause: ", ex);
 					}

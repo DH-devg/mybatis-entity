@@ -19,15 +19,15 @@ import org.apache.ibatis.session.RowBounds;
  * @author duheng
  * @Date 2021/1/25 17:42
  */
-public class MybatisEntitySelectList implements MybatisEntityInvoke {
+public class MybatisEntitySelectMapList implements MybatisEntityInvoke {
 
-	public static final String SELECTWHERE = "mybatisEntitySelectWhere";
+	public static final String SELECTMAPWHERE = "mybatisEntitySelectMapWhere";
 
-	public static final String SELECTCLASS = "mybatisEntitySelectClass";
+	public static final String SELECTMAPCLASS = "mybatisEntitySelectMapClass";
 
 	private Invocation invocation;
 
-	public MybatisEntitySelectList(Invocation invocation) {
+	public MybatisEntitySelectMapList(Invocation invocation) {
 		this.invocation = invocation;
 	}
 
@@ -37,8 +37,8 @@ public class MybatisEntitySelectList implements MybatisEntityInvoke {
 		Executor executor = (Executor) invocation.getTarget();
 		Object parameterArgs = invocation.getArgs()[1];
 		Map<String, Object> paramsMap = (Map<String, Object>) parameterArgs;
-		Map<String, Object> paramWhereMap = (Map<String, Object>) paramsMap.get(SELECTWHERE);
-		Class clazz = (Class) paramsMap.get(SELECTCLASS);
+		Map<String, Object> paramWhereMap = (Map<String, Object>) paramsMap.get(SELECTMAPWHERE);
+		Class clazz = (Class) paramsMap.get(SELECTMAPCLASS);
 		TableName tableName = (TableName) clazz.getAnnotation(TableName.class);
 		int i = 0;
 		List<ParameterMapping> parameterMappings = new ArrayList<>();

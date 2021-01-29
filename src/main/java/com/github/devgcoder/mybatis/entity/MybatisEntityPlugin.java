@@ -2,7 +2,7 @@ package com.github.devgcoder.mybatis.entity;
 
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDeleteByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsertList;
-import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectList;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectMapList;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityUpdateByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDelete;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsert;
@@ -61,7 +61,7 @@ public class MybatisEntityPlugin implements Interceptor {
 			} else if (paramsMap.containsKey(MybatisEntityDelete.DELETEMYBATISENTITY)) {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
-			} else if (paramsMap.containsKey(MybatisEntitySelectList.SELECTWHERE) && paramsMap.containsKey(MybatisEntitySelectList.SELECTCLASS)) {
+			} else if (paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPWHERE) && paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPCLASS)) {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
 			} else {

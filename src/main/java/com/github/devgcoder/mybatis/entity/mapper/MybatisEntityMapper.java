@@ -2,7 +2,7 @@ package com.github.devgcoder.mybatis.entity.mapper;
 
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDeleteByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsertList;
-import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectList;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectMapList;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityUpdateByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDelete;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsert;
@@ -32,7 +32,7 @@ public interface MybatisEntityMapper {
 	int deleteEntityByMap(@Param(MybatisEntityDeleteByMap.DELETEMAP) Map<String, Object> deleteMap,
 			@Param(MybatisEntityDeleteByMap.DELETECLASS) Class clazz);
 
-	List<Map<String, Object>> selectMapList(@Param(MybatisEntitySelectList.SELECTWHERE) Map<String, Object> whereMap,
-			@Param(MybatisEntitySelectList.SELECTCLASS) Class clazz);
+	List<Map<String, Object>> selectMapList(@Param(MybatisEntitySelectMapList.SELECTMAPWHERE) Map<String, Object> whereMap,
+			@Param(MybatisEntitySelectMapList.SELECTMAPCLASS) Class clazz);
 
 }

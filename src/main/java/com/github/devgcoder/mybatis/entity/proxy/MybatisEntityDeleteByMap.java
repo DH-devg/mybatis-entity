@@ -1,5 +1,6 @@
 package com.github.devgcoder.mybatis.entity.proxy;
 
+import com.github.devgcoder.mybatis.entity.annos.TableName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,8 @@ import org.apache.ibatis.plugin.Invocation;
 public class MybatisEntityDeleteByMap implements MybatisEntityInvoke {
 
 	public static final String DELETEMAP = "mybatisEntityDeleteMap";
-	public static final String tableName = "tableName";
+
+	public static final String DELETECLASS = "mybatisEntityDeleteClass";
 
 	private Invocation invocation;
 
@@ -32,15 +34,13 @@ public class MybatisEntityDeleteByMap implements MybatisEntityInvoke {
 		Object parameterArgs = invocation.getArgs()[1];
 		Map<String, Object> paramsMap = (Map<String, Object>) parameterArgs;
 		Map<String, Object> paramDeleteMap = (Map<String, Object>) paramsMap.get(DELETEMAP);
-		if (null == paramDeleteMap || !paramDeleteMap.containsKey(tableName)) {
-			throw new Exception("the tableName can not be null");
-		}
+		Class clazz = (Class) paramsMap.get(DELETECLASS);
+		TableName tableName = (TableName) clazz.getAnnotation(TableName.class);
 		int j = 0;
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		Map<String, Object> params = new HashMap<>();
-		String deleteTableName = (String) paramDeleteMap.get(tableName);
 		StringBuffer sqlBuffer = new StringBuffer();
-		sqlBuffer.append("DELETE FROM ").append(deleteTableName).append(" WHERE ");
+		sqlBuffer.append("DELETE FROM ").append(tableName.value()).append(" WHERE ");
 		for (String key : paramDeleteMap.keySet()) {
 			if (null == key || key.length() <= 0 || key.equals(tableName)) {
 				continue;

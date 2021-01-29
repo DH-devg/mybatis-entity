@@ -29,7 +29,8 @@ public interface MybatisEntityMapper {
 
 	<T> int deleteEntity(@Param(MybatisEntityDelete.DELETEMYBATISENTITY) T entity);
 
-	int deleteEntityByMap(@Param(MybatisEntityDeleteByMap.DELETEMAP) Map<String, Object> deleteMap);
+	int deleteEntityByMap(@Param(MybatisEntityDeleteByMap.DELETEMAP) Map<String, Object> deleteMap,
+			@Param(MybatisEntityDeleteByMap.DELETECLASS) Class clazz);
 
 	List<Map<String, Object>> selectMapList(@Param(MybatisEntitySelectList.SELECTWHERE) Map<String, Object> whereMap,
 			@Param(MybatisEntitySelectList.SELECTCLASS) Class clazz);

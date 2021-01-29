@@ -71,7 +71,7 @@ public class MybatisEntityProxy {
 			Object parameterObject = invocation.getArgs()[1];
 			if (parameterObject instanceof Map) {
 				Map<String, Object> paramsMap = (Map<String, Object>) parameterObject;
-				if (paramsMap.containsKey(MybatisEntityDeleteByMap.DELETEMAP)) {
+				if (paramsMap.containsKey(MybatisEntityDeleteByMap.DELETEMAP) && paramsMap.containsKey(MybatisEntityDeleteByMap.DELETECLASS)) {
 					try {
 						MybatisEntityDeleteByMap mybatisEntityDeleteByMap = new MybatisEntityDeleteByMap(invocation);
 						return mybatisEntityDeleteByMap.invoke();

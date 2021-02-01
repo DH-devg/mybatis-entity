@@ -3,54 +3,55 @@
     MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，简化CURD的开发，不影响原有MyBatis的使用，提升开发效率。
 
 # 快速开始    
-         开始前需先熟悉 springboot，mybatis。   
+    开始前需先熟悉 springboot，mybatis。   
 ## 初始化工程
-         创建一个空的 Spring Boot 工程 
-         可参考完整版本demo：  https://github.com/devgcoder/mybatis-entity-springboot-demo
+    创建一个空的 Spring Boot 工程 
+    可参考完整版本demo：  `https://github.com/devgcoder/mybatis-entity-springboot-demo`
 ##      添加依赖(pom.xml):         
          
-         <dependencies>
-           <dependency>
-             <groupId>org.springframework.boot</groupId>
-             <artifactId>spring-boot-starter-web</artifactId>
-           </dependency>
-           <dependency>
-             <groupId>org.mybatis.spring.boot</groupId>
-             <artifactId>mybatis-spring-boot-starter</artifactId>
-             <version>2.1.1</version>
-           </dependency>
-           <dependency>
-             <groupId>mysql</groupId>
-             <artifactId>mysql-connector-java</artifactId>
-             <version>8.0.19</version>
-           </dependency>
-           <dependency>
-             <groupId>`com.github.devgcoder`</groupId>
-             <artifactId>`mybatis-entity`</artifactId>
-             <version>`1.0.5`</version>
-           </dependency>
-         </dependencies>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>2.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.19</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.devgcoder</groupId>
+        <artifactId>mybatis-entity</artifactId>
+        <version>1.0.5</version>
+      </dependency>
+    </dependencies>
 
 ## 配置
 ### application.yml 配置
          
-         spring:
-           datasource:
-             username: root
-             password: root
-             url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
-             driver-class-name: com.mysql.cj.jdbc.Driver
+    spring:
+      datasource:
+        username: root
+        password: root
+        url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+        driver-class-name: com.mysql.cj.jdbc.Driver
 
 ### springboot 启动类配置
-         增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
-     
-         @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
-         @SpringBootApplication
-         public class Applicatioin {
-         public static void main(String[] args) {
-           SpringApplication.run(Applicatioin.class, args);
-          }
-         }
+         
+    增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
+
+    @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
+    @SpringBootApplication
+    public class Applicatioin {
+    public static void main(String[] args) {
+      SpringApplication.run(Applicatioin.class, args);
+     }
+    }
 
 ## 代码编写
 ### 注解介绍
@@ -116,13 +117,13 @@
      }
 
 ### 测试类编写
+#### 用MybatisEntityMapper的地方用MybatisEntityService 同样可以
 #### 添加实体数据（insertEntity）
      
      @RunWith(SpringRunner.class)
      @SpringBootTest
      public class ApplicatioinTest {
      
-     //  MybatisEntityService 同样可以
      @Autowired
       private MybatisEntityMapper mybatisEntityMapper;
      @Test

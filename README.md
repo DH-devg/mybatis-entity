@@ -1,6 +1,6 @@
 # MyBatis Entity
 # 简介
-    MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，简化CURD的开发，不影响原有MyBatis的使用，提升开发效率。
+    MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，底层由MyBatis执行器执行，简化CURD的开发，不影响原有MyBatis的使用，提升开发效率。
 
 # 快速开始    
     开始前需先熟悉 springboot，mybatis。   

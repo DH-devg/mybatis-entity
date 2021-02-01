@@ -7,7 +7,7 @@
 ## 初始化工程
     创建一个空的 Spring Boot 工程 
     可参考完整版本demo：  https://github.com/devgcoder/mybatis-entity-springboot-demo
-    [完整版本demo](https://github.com/devgcoder/mybatis-entity-springboot-demo "完整版本demo")  
+  
 ##      添加依赖(pom.xml):         
          
     <dependencies>
@@ -28,7 +28,7 @@
       <dependency>
         <groupId>com.github.devgcoder</groupId>
         <artifactId>mybatis-entity</artifactId>
-        <version>1.0.5</version>
+        <version>`1.0.5`</version>
       </dependency>
     </dependencies>
 

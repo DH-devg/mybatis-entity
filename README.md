@@ -24,11 +24,11 @@
              <artifactId>mysql-connector-java</artifactId>
              <version>8.0.19</version>
            </dependency>
-           `<dependency>
-             <groupId>com.github.devgcoder</groupId>
-             <artifactId>mybatis-entity</artifactId>
-             <version>1.0.5</version>
-           </dependency>`
+           <dependency>
+             <groupId>`com.github.devgcoder`</groupId>
+             <artifactId>`mybatis-entity`</artifactId>
+             <version>`1.0.5`</version>
+           </dependency>
          </dependencies>
 
 ## 配置

@@ -31,8 +31,8 @@
            </dependency>
          </dependencies>
 
-##配置
-###application.yml 配置
+## 配置
+### application.yml 配置
          
          spring:
            datasource:
@@ -41,7 +41,7 @@
              url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
              driver-class-name: com.mysql.cj.jdbc.Driver
 
-###springboot 启动类配置
+### springboot 启动类配置
          增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
      
          @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
@@ -52,7 +52,7 @@
           }
          }
 
-##代码编写
+## 代码编写
 ### 注解介绍
    
      // 类注解
@@ -82,7 +82,7 @@
      }
 
 
-###实体类编写
+### 实体类编写
      
      @TableName("user")
      public class User {
@@ -115,8 +115,8 @@
      }
      }
 
-###测试类编写
-####添加实体数据（insertEntity）
+### 测试类编写
+#### 添加实体数据（insertEntity）
      
      @RunWith(SpringRunner.class)
      @SpringBootTest
@@ -140,7 +140,7 @@
      15:01:59.215 [main] DEBUG c.g.d.m.e.m.M.insertEntity - <==    Updates: 1
      num=1,id=1
 
-####批量添加实体 (insertEntityList)
+#### 批量添加实体 (insertEntityList)
      
      @Test
      public void testEntity() {
@@ -168,7 +168,7 @@
      id=36
      num=5
 
-####编辑实体数据（updateEntity）
+#### 编辑实体数据（updateEntity）
      
      @Test
      public void testEntity() {
@@ -187,7 +187,7 @@
      15:04:51.935 [main] DEBUG c.g.d.m.e.m.M.updateEntity - <==    Updates: 1
      num=1,id=1
 
-####编辑实体数据 (updateEntityByMap)
+#### 编辑实体数据 (updateEntityByMap)
     
     @Test
     public void testEntity() {
@@ -206,7 +206,7 @@
     15:46:20.072 [main] DEBUG c.g.d.m.e.m.M.updateEntityByMap - <==    Updates: 1
     num=1
 
-####删除实体数据(deleteEntity)
+#### 删除实体数据(deleteEntity)
     
     @Test
     public void testEntity() {
@@ -223,7 +223,7 @@
     num=1
 
 
-####删除实体数据(deleteEntityByMap)
+#### 删除实体数据(deleteEntityByMap)
     
     @Test
     public void testEntity() {
@@ -240,7 +240,7 @@
     16:05:55.559 [main] DEBUG c.g.d.m.e.m.M.deleteEntityByMap - <==    Updates: 1
     num=1
 
-####查询实体数据(selectMapList)
+#### 查询实体数据(selectMapList)
     
     @Test
     public void testEntity() {

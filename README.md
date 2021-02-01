@@ -6,13 +6,8 @@
          开始前需先熟悉 springboot，mybatis。   
 ## 初始化工程
          创建一个空的 Spring Boot 工程 
-         可参考完整版本demo：
-             https://github.com/devgcoder/mybatis-entity-springboot-demo
-##        添加依赖(pom.xml):
-         spring-boot-starter-web
-         mybatis-spring-boot-starter
-         mysql-connector-java
-         mybatis-entity
+         可参考完整版本demo：  https://github.com/devgcoder/mybatis-entity-springboot-demo
+##      添加依赖(pom.xml):         
          
          <dependencies>
            <dependency>
@@ -38,23 +33,24 @@
 
 ##配置
 ###application.yml 配置
-     spring:
-       datasource:
-         username: root
-         password: root
-         url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
-         driver-class-name: com.mysql.cj.jdbc.Driver
+         
+         spring:
+           datasource:
+             username: root
+             password: root
+             url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+             driver-class-name: com.mysql.cj.jdbc.Driver
 
 ###springboot 启动类配置
-     增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
+         增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
      
-     @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
-     @SpringBootApplication
-     public class Applicatioin {
-     public static void main(String[] args) {
-       SpringApplication.run(Applicatioin.class, args);
-      }
-     }
+         @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
+         @SpringBootApplication
+         public class Applicatioin {
+         public static void main(String[] args) {
+           SpringApplication.run(Applicatioin.class, args);
+          }
+         }
 
 ##代码编写
 ### 注解介绍
@@ -87,6 +83,7 @@
 
 
 ###实体类编写
+     
      @TableName("user")
      public class User {
      
@@ -120,6 +117,7 @@
 
 ###测试类编写
 ####添加实体数据（insertEntity）
+     
      @RunWith(SpringRunner.class)
      @SpringBootTest
      public class ApplicatioinTest {
@@ -143,6 +141,7 @@
      num=1,id=1
 
 ####批量添加实体 (insertEntityList)
+     
      @Test
      public void testEntity() {
       List<User> userList = new ArrayList<>();
@@ -170,6 +169,7 @@
      num=5
 
 ####编辑实体数据（updateEntity）
+     
      @Test
      public void testEntity() {
       User user = new User();
@@ -188,6 +188,7 @@
      num=1,id=1
 
 ####编辑实体数据 (updateEntityByMap)
+    
     @Test
     public void testEntity() {
      User user = new User();
@@ -206,6 +207,7 @@
     num=1
 
 ####删除实体数据(deleteEntity)
+    
     @Test
     public void testEntity() {
      User user = new User();
@@ -222,6 +224,7 @@
 
 
 ####删除实体数据(deleteEntityByMap)
+    
     @Test
     public void testEntity() {
      Map<String, Object> deleteMap = new HashMap<>();
@@ -238,6 +241,7 @@
     num=1
 
 ####查询实体数据(selectMapList)
+    
     @Test
     public void testEntity() {
      Map<String, Object> whereMap = new HashMap<>();

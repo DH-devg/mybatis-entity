@@ -1,4 +1,4 @@
-# mybatis-entity
+# MyBatis Entity
 # 简介
     MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，简化CURD的开发，不影响原有MyBatis的使用，提升开发效率。
 
@@ -24,11 +24,11 @@
              <artifactId>mysql-connector-java</artifactId>
              <version>8.0.19</version>
            </dependency>
-           <dependency>
+           `<dependency>
              <groupId>com.github.devgcoder</groupId>
              <artifactId>mybatis-entity</artifactId>
              <version>1.0.5</version>
-           </dependency>
+           </dependency>`
          </dependencies>
 
 ## 配置
@@ -121,6 +121,8 @@
      @RunWith(SpringRunner.class)
      @SpringBootTest
      public class ApplicatioinTest {
+     
+     //  MybatisEntityService 同样可以
      @Autowired
       private MybatisEntityMapper mybatisEntityMapper;
      @Test
@@ -158,6 +160,7 @@
       System.out.println("num=" + num);
      }
      
+      结果如下：
      15:36:22.522 [main] DEBUG c.g.d.m.e.m.M.insertEntityList - ==>  Preparing: INSERT INTO user(name,age) Values (?,?),(?,?),(?,?),(?,?),(?,?) 
      15:36:22.561 [main] DEBUG c.g.d.m.e.m.M.insertEntityList - ==> Parameters: 王五0(String), 10(Integer), 王五1(String), 11(Integer), 王五2(String), 12(Integer), 王五3(String), 13(Integer), 王五4(String), 14(Integer)
      15:36:22.564 [main] DEBUG c.g.d.m.e.m.M.insertEntityList - <==    Updates: 5

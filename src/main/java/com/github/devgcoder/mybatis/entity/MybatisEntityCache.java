@@ -1,6 +1,7 @@
 package com.github.devgcoder.mybatis.entity;
 
 import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
+import com.github.devgcoder.mybatis.entity.utils.MybatisEntityUtil;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
@@ -8,6 +9,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -19,9 +24,13 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  */
 public class MybatisEntityCache implements InitializingBean {
 
+	private static final Logger logger = LoggerFactory.getLogger(MybatisEntityCache.class);
+
 	private static final String defaultBasePackage = "com.github.devgcoder";
 
 	private static final String dotSql = ".sql";
+
+	private static String theadCacheDir = "";
 
 	public static final Map<String, String> sqlCacheMap = new ConcurrentHashMap();
 
@@ -46,6 +55,7 @@ public class MybatisEntityCache implements InitializingBean {
 		if (!cacheDir.endsWith(File.separator)) {
 			cacheDir += File.separator;
 		}
+		theadCacheDir = cacheDir;
 		File fileDir = new File(cacheDir);
 		if (!fileDir.exists() && !fileDir.isDirectory()) {
 			fileDir.mkdir();
@@ -73,5 +83,24 @@ public class MybatisEntityCache implements InitializingBean {
 				}
 			}
 		}
+		ScheduledThreadPoolExecutor scheduled = new ScheduledThreadPoolExecutor(1);
+		scheduled.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				File file = new File(theadCacheDir);
+				File[] tempFileList = file.listFiles();
+				if (null != tempFileList && tempFileList.length > 0) {
+					for (File tempFile : tempFileList) {
+						if (tempFile.isFile()) {
+							String name = tempFile.getName();
+							name = name.substring(0, name.lastIndexOf("."));
+							String executeSql = MybatisEntityUtil.readFileContent(tempFile);
+							sqlCacheMap.put(name, executeSql);
+							logger.info("load name:{},sql:{}", name, executeSql);
+						}
+					}
+				}
+			}
+		}, 0, 120, TimeUnit.SECONDS);
 	}
 }

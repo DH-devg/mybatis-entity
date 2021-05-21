@@ -79,4 +79,9 @@ public class MybatisEntityServiceImpl implements MybatisEntityService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap, Class clazz) {
+		return mybatisEntityMapper.selectCacheMapList(whereMap, clazz);
+	}
 }

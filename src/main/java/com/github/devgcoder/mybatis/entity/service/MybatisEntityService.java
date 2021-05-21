@@ -28,4 +28,6 @@ public interface MybatisEntityService {
 	<E> List<E> selectEntityList(Map<String, Object> whereMap, Class clazz);
 
 	<T> T selectOneEntity(Object id, Class clazz);
+
+	List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap,Class clazz);
 }

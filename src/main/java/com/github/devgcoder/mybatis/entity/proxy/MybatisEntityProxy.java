@@ -88,7 +88,6 @@ public class MybatisEntityProxy {
 					}
 				}
 			}
-
 		} else if (SqlCommandType.SELECT.equals(sqlCommandType)) {
 			Object parameterObject = invocation.getArgs()[1];
 			if (parameterObject instanceof Map) {
@@ -98,7 +97,16 @@ public class MybatisEntityProxy {
 						MybatisEntitySelectMapList mybatisEntitySelectMapList = new MybatisEntitySelectMapList(invocation);
 						return mybatisEntitySelectMapList.invoke();
 					} catch (Exception ex) {
-						throw ExceptionFactory.wrapException("Error entity deleteByMap.  Cause: ", ex);
+						throw ExceptionFactory.wrapException("Error selectMapList.  Cause: ", ex);
+					}
+				}
+				if (paramsMap.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) && paramsMap
+						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMYBATISECLASS)) {
+					try {
+						MybatisEntitySelectCacheMapList mybatisEntitySelectCacheMapList = new MybatisEntitySelectCacheMapList(invocation);
+						return mybatisEntitySelectCacheMapList.invoke();
+					} catch (Exception ex) {
+						throw ExceptionFactory.wrapException("Error selectCacheMapList.  Cause: ", ex);
 					}
 				}
 			}

@@ -1,6 +1,8 @@
 package com.github.devgcoder.mybatis.entity.proxy;
 
 import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
+import com.github.devgcoder.mybatis.entity.parser.HandleParser;
+import com.github.devgcoder.mybatis.entity.parser.impl.SqlDefaultParser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,24 +41,10 @@ public class MybatisEntitySelectCacheMapList implements MybatisEntityInvoke {
 		Class clazz = (Class) paramsMap.get(SELECTCACHEMAPMYBATISECLASS);
 		CacheSelect cacheSelect = (CacheSelect) clazz.getAnnotation(CacheSelect.class);
 		String sql = cacheSelect.sql();
-		StringBuffer whereSql = new StringBuffer();
 		Map<String, Object> params = new HashMap<>();
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
-		if (null != paramWhereMap && !paramWhereMap.isEmpty()) {
-			whereSql.append(" WHERE ");
-			int j = 0;
-			for (String key : paramWhereMap.keySet()) {
-				Object value = paramWhereMap.get(key);
-				if (j > 0) {
-					whereSql.append(" AND ");
-				}
-				whereSql.append(key).append("=?");
-				parameterMappings.add(new ParameterMapping.Builder(ms.getConfiguration(), key, value.getClass()).build());
-				params.put(key, value);
-				j++;
-			}
-		}
-		String executeSql = sql + whereSql.toString();
+		HandleParser handleParser = new SqlDefaultParser(sql, paramWhereMap);
+		String executeSql = handleParser.getText();
 		BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), executeSql, parameterMappings, params);
 		CacheKey key = executor.createCacheKey(ms, params, RowBounds.DEFAULT, newBoundSql);
 		List<Map<String, Object>> list = executor.query(ms, params, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER, key, newBoundSql);

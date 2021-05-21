@@ -1,5 +1,6 @@
 package com.github.devgcoder.mybatis.entity.proxy;
 
+import com.github.devgcoder.mybatis.entity.MybatisEntityCache;
 import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
 import com.github.devgcoder.mybatis.entity.parser.HandleParser;
 import com.github.devgcoder.mybatis.entity.parser.impl.SqlDefaultParser;
@@ -41,6 +42,11 @@ public class MybatisEntitySelectCacheMapList implements MybatisEntityInvoke {
 		Class clazz = (Class) paramsMap.get(SELECTCACHEMAPMYBATISECLASS);
 		CacheSelect cacheSelect = (CacheSelect) clazz.getAnnotation(CacheSelect.class);
 		String sql = cacheSelect.sql();
+		String clazzName = clazz.getName();
+		String clazzSql = MybatisEntityCache.sqlCacheMap.get(clazzName);
+		if (null != clazzSql && !clazzSql.equals("")) {
+			sql = clazzSql;
+		}
 		Map<String, Object> params = new HashMap<>();
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		HandleParser handleParser = new SqlDefaultParser(sql, paramWhereMap);

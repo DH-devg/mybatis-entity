@@ -2,7 +2,10 @@ package com.github.devgcoder.mybatis.entity;
 
 import com.github.devgcoder.mybatis.entity.service.MybatisEntityService;
 import com.github.devgcoder.mybatis.entity.service.MybatisEntityServiceImpl;
+import java.util.Properties;
+import javax.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +14,15 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2021/1/22 20:27
  */
 @Configuration
+@EnableConfigurationProperties(MybatisEntityConfig.class)
 @ConditionalOnWebApplication //web应用才生效
 public class MybatisEntityAutoConfiguration {
+
+	private final MybatisEntityConfig mybatisEntityConfig;
+
+	public MybatisEntityAutoConfiguration(MybatisEntityConfig mybatisEntityConfig) {
+		this.mybatisEntityConfig = mybatisEntityConfig;
+	}
 
 	@Bean
 	public MybatisEntityPlugin pageInterceptor() {
@@ -24,4 +34,8 @@ public class MybatisEntityAutoConfiguration {
 		return new MybatisEntityServiceImpl();
 	}
 
+	@Bean
+	public MybatisEntityCache mybatisEntityCache() {
+		return new MybatisEntityCache(mybatisEntityConfig);
+	}
 }

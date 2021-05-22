@@ -101,7 +101,8 @@ public class MybatisEntityProxy {
 					}
 				}
 				if (paramsMap.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) && paramsMap
-						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMYBATISECLASS)) {
+						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPCLASS) && paramsMap
+						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMETHODNAME)) {
 					try {
 						MybatisEntitySelectCacheMapList mybatisEntitySelectCacheMapList = new MybatisEntitySelectCacheMapList(invocation);
 						return mybatisEntitySelectCacheMapList.invoke();

@@ -9,15 +9,12 @@ import java.lang.annotation.Target;
 
 /**
  * @author duheng
- * @Date 2021/5/22 17:32
+ * @Date 2021/5/21 10:58
  */
-
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface CacheSelect {
+@Target(ElementType.TYPE)
+public @interface CacheMapper {
 
-	String sql() default "";
 }
-

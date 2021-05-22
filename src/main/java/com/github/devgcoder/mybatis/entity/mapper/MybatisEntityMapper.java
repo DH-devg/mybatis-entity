@@ -37,5 +37,6 @@ public interface MybatisEntityMapper {
 			@Param(MybatisEntitySelectMapList.SELECTMAPCLASS) Class clazz);
 
 	List<Map<String, Object>> selectCacheMapList(@Param(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) Map<String, Object> whereMap,
-			@Param(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMYBATISECLASS) Class clazz);
+			@Param(MybatisEntitySelectCacheMapList.SELECTCACHEMAPCLASS) Class clazz,
+			@Param(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMETHODNAME) String methodName);
 }

@@ -29,5 +29,5 @@ public interface MybatisEntityService {
 
 	<T> T selectOneEntity(Object id, Class clazz);
 
-	List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap,Class clazz);
+	List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap, Class clazz, String methodName);
 }

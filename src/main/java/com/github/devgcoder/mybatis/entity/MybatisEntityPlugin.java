@@ -66,7 +66,8 @@ public class MybatisEntityPlugin implements Interceptor {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
 			} else if (paramsMap.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) && paramsMap
-					.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMYBATISECLASS)) {
+					.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPCLASS) && paramsMap
+					.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMETHODNAME)) {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
 			} else {

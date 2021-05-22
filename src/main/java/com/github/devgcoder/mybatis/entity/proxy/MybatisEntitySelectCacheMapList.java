@@ -1,9 +1,11 @@
 package com.github.devgcoder.mybatis.entity.proxy;
 
 import com.github.devgcoder.mybatis.entity.MybatisEntityCache;
+import com.github.devgcoder.mybatis.entity.annos.CacheMapper;
 import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
 import com.github.devgcoder.mybatis.entity.parser.HandleParser;
 import com.github.devgcoder.mybatis.entity.parser.impl.SqlDefaultParser;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +26,9 @@ public class MybatisEntitySelectCacheMapList implements MybatisEntityInvoke {
 
 	public static final String SELECTCACHEMAPWHERE = "mybatisEntitySelectCacheMapWhere";
 
-	public static final String SELECTCACHEMAPMYBATISECLASS = "mybatisEntitySelectCacheMapClass";
+	public static final String SELECTCACHEMAPCLASS = "mybatisEntitySelectCacheMapClass";
+
+	public static final String SELECTCACHEMAPMETHODNAME = "mybatisEntitySelectCacheMapMethodName";
 
 	private Invocation invocation;
 
@@ -39,13 +43,22 @@ public class MybatisEntitySelectCacheMapList implements MybatisEntityInvoke {
 		Object parameterArgs = invocation.getArgs()[1];
 		Map<String, Object> paramsMap = (Map<String, Object>) parameterArgs;
 		Map<String, Object> paramWhereMap = (Map<String, Object>) paramsMap.get(SELECTCACHEMAPWHERE);
-		Class clazz = (Class) paramsMap.get(SELECTCACHEMAPMYBATISECLASS);
-		CacheSelect cacheSelect = (CacheSelect) clazz.getAnnotation(CacheSelect.class);
+		String methodName = (String) paramsMap.get(SELECTCACHEMAPMETHODNAME);
+		Class clazz = (Class) paramsMap.get(SELECTCACHEMAPCLASS);
+		CacheMapper cacheMapper = (CacheMapper) clazz.getAnnotation(CacheMapper.class);
+		if (null == cacheMapper) {
+			throw new Exception("the clazz " + clazz.getName() + " CacheMapper annotation can not be null");
+		}
+		Method method = clazz.getMethod(methodName, null);
+		CacheSelect cacheSelect = method.getAnnotation(CacheSelect.class);
+		if (null == cacheSelect) {
+			throw new Exception("the method " + method.getName() + " cacheSelect annotation can not be null");
+		}
 		String sql = cacheSelect.sql();
 		String clazzName = clazz.getName();
-		String clazzSql = MybatisEntityCache.sqlCacheMap.get(clazzName);
-		if (null != clazzSql && !clazzSql.equals("")) {
-			sql = clazzSql;
+		String cacheSql = MybatisEntityCache.sqlCacheMap.get(clazzName + MybatisEntityCache.underline + methodName);
+		if (null != cacheSql && !cacheSql.equals("")) {
+			sql = cacheSql;
 		}
 		Map<String, Object> params = new HashMap<>();
 		List<ParameterMapping> parameterMappings = new ArrayList<>();

@@ -13,6 +13,8 @@ public class MybatisEntityConfig {
 
 	private String cacheDir;
 
+	private Integer cacheSecond;
+
 	public String getBasePackage() {
 		return basePackage;
 	}
@@ -27,5 +29,13 @@ public class MybatisEntityConfig {
 
 	public void setCacheDir(String cacheDir) {
 		this.cacheDir = cacheDir;
+	}
+
+	public Integer getCacheSecond() {
+		return cacheSecond;
+	}
+
+	public void setCacheSecond(Integer cacheSecond) {
+		this.cacheSecond = cacheSecond;
 	}
 }

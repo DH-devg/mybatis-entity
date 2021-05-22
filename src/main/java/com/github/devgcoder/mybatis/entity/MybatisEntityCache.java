@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -42,6 +43,10 @@ public class MybatisEntityCache implements InitializingBean {
 	private static String theadCacheDir = "";
 
 	public static final Map<String, String> sqlCacheMap = new ConcurrentHashMap();
+
+	public static final Map<String, Long> sqlModifiedTimeMap = new ConcurrentHashMap();
+
+	private static final AtomicBoolean lock = new AtomicBoolean(false);
 
 	private MybatisEntityConfig mybatisEntityConfig;
 
@@ -167,22 +172,34 @@ public class MybatisEntityCache implements InitializingBean {
 			@Override
 			public void run() {
 				try {
-					File file = new File(theadCacheDir);
-					File[] tempFileList = file.listFiles();
-					if (null != tempFileList && tempFileList.length > 0) {
-						for (File tempFile : tempFileList) {
-							if (tempFile.isFile()) {
-								String name = tempFile.getName();
-								name = name.substring(0, name.lastIndexOf("."));
-								String executeSql = MybatisEntityUtil.readFileContent(tempFile);
-								sqlCacheMap.put(name, executeSql);
-								logger.info("load name:{},sql:{}", name, executeSql);
+					if (lock.compareAndSet(false, true)) {
+						File file = new File(theadCacheDir);
+						File[] tempFileList = file.listFiles();
+						if (null != tempFileList && tempFileList.length > 0) {
+							for (File tempFile : tempFileList) {
+								if (tempFile.isFile()) {
+									String name = tempFile.getName();
+									name = name.substring(0, name.lastIndexOf("."));
+									long modifiedTime = tempFile.lastModified();
+									Long lastModifiedTime = sqlModifiedTimeMap.get(name);
+									if (null != lastModifiedTime && lastModifiedTime >= modifiedTime) {
+										continue;
+									}
+									String executeSql = MybatisEntityUtil.readFileContent(tempFile);
+									sqlCacheMap.put(name, executeSql);
+									sqlModifiedTimeMap.put(name, modifiedTime);
+									logger.info("load name:{},sql:{}", name, executeSql);
+								}
 							}
 						}
+						lock.set(false);
+					} else {
+						logger.warn("dealSchedule is running");
 					}
 				} catch (Exception ex) {
 					logger.error("dealSchedule error", ex);
 					ex.printStackTrace();
+					lock.set(false);
 				}
 			}
 		}, 0, cacheSecond, TimeUnit.SECONDS);

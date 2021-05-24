@@ -2,8 +2,6 @@ package com.github.devgcoder.mybatis.entity;
 
 import com.github.devgcoder.mybatis.entity.service.MybatisEntityService;
 import com.github.devgcoder.mybatis.entity.service.MybatisEntityServiceImpl;
-import java.util.Properties;
-import javax.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +23,7 @@ public class MybatisEntityAutoConfiguration {
 	}
 
 	@Bean
-	public MybatisEntityPlugin pageInterceptor() {
+	public MybatisEntityPlugin mybatisEntityPlugin() {
 		return new MybatisEntityPlugin();
 	}
 

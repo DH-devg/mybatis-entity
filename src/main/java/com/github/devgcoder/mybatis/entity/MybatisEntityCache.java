@@ -71,7 +71,7 @@ public class MybatisEntityCache implements InitializingBean {
 		theadCacheDir = cacheDir;
 		File fileDir = new File(cacheDir);
 		if (!fileDir.exists() && !fileDir.isDirectory()) {
-			fileDir.mkdir();
+			fileDir.mkdirs();
 		}
 		File[] files = fileDir.listFiles();
 		if (null != files && files.length > 0) {

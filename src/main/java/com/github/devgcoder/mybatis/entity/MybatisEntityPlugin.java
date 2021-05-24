@@ -1,8 +1,11 @@
 package com.github.devgcoder.mybatis.entity;
 
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheDelete;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheInsert;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheUpdate;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDeleteByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsertList;
-import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectCacheMapList;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheSelectMapList;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntitySelectMapList;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityUpdateByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDelete;
@@ -65,9 +68,24 @@ public class MybatisEntityPlugin implements Interceptor {
 			} else if (paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPWHERE) && paramsMap.containsKey(MybatisEntitySelectMapList.SELECTMAPCLASS)) {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
-			} else if (paramsMap.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) && paramsMap
-					.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPCLASS) && paramsMap
-					.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMETHODNAME)) {
+			} else if (paramsMap.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPWHERE) && paramsMap
+					.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPCLASS) && paramsMap
+					.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPMETHODNAME)) {
+				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
+				return mybatisEntityInvoke.invoke();
+			} else if (paramsMap.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPWHERE) && paramsMap
+					.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPCLASS) && paramsMap
+					.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPMETHODNAME)) {
+				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
+				return mybatisEntityInvoke.invoke();
+			} else if (paramsMap.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPWHERE) && paramsMap
+					.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPCLASS) && paramsMap
+					.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPMETHODNAME)) {
+				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
+				return mybatisEntityInvoke.invoke();
+			} else if (paramsMap.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPWHERE) && paramsMap
+					.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPCLASS) && paramsMap
+					.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPMETHODNAME)) {
 				MybatisEntityProxy mybatisEntityInvoke = new MybatisEntityProxy(invocation);
 				return mybatisEntityInvoke.invoke();
 			} else {

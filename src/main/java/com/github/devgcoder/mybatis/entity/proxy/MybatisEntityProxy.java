@@ -45,6 +45,15 @@ public class MybatisEntityProxy {
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error entity insert.  Cause: ", ex);
 					}
+				} else if (paramsMap.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPWHERE) && paramsMap
+						.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPCLASS) && paramsMap
+						.containsKey(MybatisEntityCacheInsert.CACHEINSERTMAPMETHODNAME)) {
+					try {
+						MybatisEntityCacheInsert mybatisEntityCacheInsert = new MybatisEntityCacheInsert(invocation);
+						return mybatisEntityCacheInsert.invoke();
+					} catch (Exception ex) {
+						throw ExceptionFactory.wrapException("Error mybatisEntityCacheInsert.  Cause: ", ex);
+					}
 				}
 			}
 		} else if (SqlCommandType.UPDATE.equals(sqlCommandType)) {
@@ -65,6 +74,15 @@ public class MybatisEntityProxy {
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error entity update.  Cause: ", ex);
 					}
+				} else if (paramsMap.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPWHERE) && paramsMap
+						.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPCLASS) && paramsMap
+						.containsKey(MybatisEntityCacheUpdate.CACHEUPDATEMAPMETHODNAME)) {
+					try {
+						MybatisEntityCacheUpdate mybatisEntityCacheUpdate = new MybatisEntityCacheUpdate(invocation);
+						return mybatisEntityCacheUpdate.invoke();
+					} catch (Exception ex) {
+						throw ExceptionFactory.wrapException("Error mybatisEntityCacheUpdate.  Cause: ", ex);
+					}
 				}
 			}
 		} else if (SqlCommandType.DELETE.equals(sqlCommandType)) {
@@ -78,13 +96,21 @@ public class MybatisEntityProxy {
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error entity deleteByMap.  Cause: ", ex);
 					}
-				}
-				if (paramsMap.containsKey(MybatisEntityDelete.DELETEMYBATISENTITY)) {
+				} else if (paramsMap.containsKey(MybatisEntityDelete.DELETEMYBATISENTITY)) {
 					try {
 						MybatisEntityDelete mybatisEntityDelete = new MybatisEntityDelete(invocation);
 						return mybatisEntityDelete.invoke();
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error entity delete.  Cause: ", ex);
+					}
+				} else if (paramsMap.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPWHERE) && paramsMap
+						.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPCLASS) && paramsMap
+						.containsKey(MybatisEntityCacheDelete.CACHEDELETEMAPMETHODNAME)) {
+					try {
+						MybatisEntityCacheDelete mybatisEntityCacheDelete = new MybatisEntityCacheDelete(invocation);
+						return mybatisEntityCacheDelete.invoke();
+					} catch (Exception ex) {
+						throw ExceptionFactory.wrapException("Error mybatisEntityCacheDelete.  Cause: ", ex);
 					}
 				}
 			}
@@ -99,13 +125,12 @@ public class MybatisEntityProxy {
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error selectMapList.  Cause: ", ex);
 					}
-				}
-				if (paramsMap.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPWHERE) && paramsMap
-						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPCLASS) && paramsMap
-						.containsKey(MybatisEntitySelectCacheMapList.SELECTCACHEMAPMETHODNAME)) {
+				} else if (paramsMap.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPWHERE) && paramsMap
+						.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPCLASS) && paramsMap
+						.containsKey(MybatisEntityCacheSelectMapList.CACHESELECTMAPMETHODNAME)) {
 					try {
-						MybatisEntitySelectCacheMapList mybatisEntitySelectCacheMapList = new MybatisEntitySelectCacheMapList(invocation);
-						return mybatisEntitySelectCacheMapList.invoke();
+						MybatisEntityCacheSelectMapList mybatisEntityCacheSelectMapList = new MybatisEntityCacheSelectMapList(invocation);
+						return mybatisEntityCacheSelectMapList.invoke();
 					} catch (Exception ex) {
 						throw ExceptionFactory.wrapException("Error selectCacheMapList.  Cause: ", ex);
 					}

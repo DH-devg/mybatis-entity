@@ -1,5 +1,8 @@
 package com.github.devgcoder.mybatis.entity.mapper;
 
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheDelete;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheInsert;
+import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheUpdate;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityDeleteByMap;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityInsertList;
 import com.github.devgcoder.mybatis.entity.proxy.MybatisEntityCacheSelectMapList;
@@ -39,4 +42,14 @@ public interface MybatisEntityMapper {
 	List<Map<String, Object>> selectCacheMapList(@Param(MybatisEntityCacheSelectMapList.CACHESELECTMAPWHERE) Map<String, Object> whereMap,
 			@Param(MybatisEntityCacheSelectMapList.CACHESELECTMAPCLASS) Class clazz,
 			@Param(MybatisEntityCacheSelectMapList.CACHESELECTMAPMETHODNAME) String methodName);
+
+
+	int insertCacheMap(@Param(MybatisEntityCacheInsert.CACHEINSERTMAPWHERE) Map<String, Object> whereMap,
+			@Param(MybatisEntityCacheInsert.CACHEINSERTMAPCLASS) Class clazz, @Param(MybatisEntityCacheInsert.CACHEINSERTMAPMETHODNAME) String methodName);
+
+	int updateCacheMap(@Param(MybatisEntityCacheUpdate.CACHEUPDATEMAPWHERE) Map<String, Object> whereMap,
+			@Param(MybatisEntityCacheUpdate.CACHEUPDATEMAPCLASS) Class clazz, @Param(MybatisEntityCacheUpdate.CACHEUPDATEMAPMETHODNAME) String methodName);
+
+	int deleteCacheMap(@Param(MybatisEntityCacheDelete.CACHEDELETEMAPWHERE) Map<String, Object> whereMap,
+			@Param(MybatisEntityCacheDelete.CACHEDELETEMAPCLASS) Class clazz, @Param(MybatisEntityCacheDelete.CACHEDELETEMAPMETHODNAME) String methodName);
 }

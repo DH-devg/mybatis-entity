@@ -37,4 +37,9 @@ public interface MybatisEntityService {
 
 	<T> T selectCacheOneEntity(Map<String, Object> whereMap, Class clazz, String methodName,Class<T> resultClazz);
 
+	int insertCacheMap(Map<String, Object> whereMap, Class clazz, String methodName);
+
+	int updateCacheMap(Map<String, Object> whereMap, Class clazz, String methodName);
+
+	int deleteCacheMap(Map<String, Object> whereMap, Class clazz, String methodName);
 }

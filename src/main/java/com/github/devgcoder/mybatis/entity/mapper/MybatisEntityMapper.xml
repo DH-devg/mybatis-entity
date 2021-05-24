@@ -10,4 +10,7 @@
   <delete id="deleteEntityByMap"></delete>
   <select id="selectMapList" resultType="java.util.Map"></select>
   <select id="selectCacheMapList" resultType="java.util.Map"></select>
+  <insert id="insertCacheMap"></insert>
+  <update id="updateCacheMap"></update>
+  <delete id="deleteCacheMap"></delete>
 </mapper>

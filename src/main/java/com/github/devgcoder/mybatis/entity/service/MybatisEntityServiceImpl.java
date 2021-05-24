@@ -110,4 +110,19 @@ public class MybatisEntityServiceImpl implements MybatisEntityService {
 		}
 		return null;
 	}
+
+	@Override
+	public int insertCacheMap(Map<String, Object> whereMap, Class clazz, String methodName) {
+		return mybatisEntityMapper.insertCacheMap(whereMap, clazz, methodName);
+	}
+
+	@Override
+	public int updateCacheMap(Map<String, Object> whereMap, Class clazz, String methodName) {
+		return mybatisEntityMapper.updateCacheMap(whereMap, clazz, methodName);
+	}
+
+	@Override
+	public int deleteCacheMap(Map<String, Object> whereMap, Class clazz, String methodName) {
+		return mybatisEntityMapper.deleteCacheMap(whereMap, clazz, methodName);
+	}
 }

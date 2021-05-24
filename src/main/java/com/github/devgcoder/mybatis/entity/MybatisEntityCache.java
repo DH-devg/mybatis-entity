@@ -1,7 +1,10 @@
 package com.github.devgcoder.mybatis.entity;
 
+import com.github.devgcoder.mybatis.entity.annos.CacheDelete;
+import com.github.devgcoder.mybatis.entity.annos.CacheInsert;
 import com.github.devgcoder.mybatis.entity.annos.CacheMapper;
 import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
+import com.github.devgcoder.mybatis.entity.annos.CacheUpdate;
 import com.github.devgcoder.mybatis.entity.utils.MybatisEntityUtil;
 import java.io.File;
 import java.io.FileWriter;
@@ -114,13 +117,25 @@ public class MybatisEntityCache implements InitializingBean {
 			}
 			for (Method method : methods) {
 				CacheSelect cacheSelect = method.getAnnotation(CacheSelect.class);
-				if (null == cacheSelect) {
+				CacheInsert cacheInsert = method.getAnnotation(CacheInsert.class);
+				CacheUpdate cacheUpdate = method.getAnnotation(CacheUpdate.class);
+				CacheDelete cacheDelete = method.getAnnotation(CacheDelete.class);
+				if (null == cacheSelect && cacheInsert == null && cacheUpdate == null && cacheDelete == null) {
 					continue;
 				}
 				String methodName = method.getName();
 				String sqlName = clazzName + MybatisEntityCache.underline + methodName;
 				String sqlPath = (cacheDir + sqlName + dotSql);
-				String sql = cacheSelect.sql();
+				String sql = null;
+				if (null != cacheSelect) {
+					sql = cacheSelect.sql();
+				} else if (null != cacheInsert) {
+					sql = cacheInsert.sql();
+				} else if (null != cacheUpdate) {
+					sql = cacheUpdate.sql();
+				} else if (null != cacheDelete) {
+					sql = cacheDelete.sql();
+				}
 				dealCreateFileAndWriteSql(sqlName, sqlPath, sql);
 			}
 		}

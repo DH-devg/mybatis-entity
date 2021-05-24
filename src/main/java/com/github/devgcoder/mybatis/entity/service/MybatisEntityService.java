@@ -30,4 +30,11 @@ public interface MybatisEntityService {
 	<T> T selectOneEntity(Object id, Class clazz);
 
 	List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap, Class clazz, String methodName);
+
+	Map<String, Object> selectCacheMap(Map<String, Object> whereMap, Class clazz, String methodName);
+
+	<E> List<E> selectCacheList(Map<String, Object> whereMap, Class clazz, String methodName,Class<E> resultClazz);
+
+	<T> T selectCacheOneEntity(Map<String, Object> whereMap, Class clazz, String methodName,Class<T> resultClazz);
+
 }

@@ -84,4 +84,30 @@ public class MybatisEntityServiceImpl implements MybatisEntityService {
 	public List<Map<String, Object>> selectCacheMapList(Map<String, Object> whereMap, Class clazz, String methodName) {
 		return mybatisEntityMapper.selectCacheMapList(whereMap, clazz, methodName);
 	}
+
+	@Override
+	public Map<String, Object> selectCacheMap(Map<String, Object> whereMap, Class clazz, String methodName) {
+		List<Map<String, Object>> list = mybatisEntityMapper.selectCacheMapList(whereMap, clazz, methodName);
+		if (null != list && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public <E> List<E> selectCacheList(Map<String, Object> whereMap, Class clazz, String methodName, Class<E> resultClazz) {
+		List<Map<String, Object>> list = mybatisEntityMapper.selectCacheMapList(whereMap, clazz, methodName);
+		return MybatisEntityUtil.parseObjctList(list, resultClazz);
+	}
+
+	@Override
+	public <T> T selectCacheOneEntity(Map<String, Object> whereMap, Class clazz, String methodName, Class<T> resultClazz) {
+		List<Map<String, Object>> list = mybatisEntityMapper.selectCacheMapList(whereMap, clazz, methodName);
+		if (null != list && list.size() > 0) {
+			Map<String, Object> resultMap = list.get(0);
+			T result = MybatisEntityUtil.parseObject(resultMap, resultClazz);
+			return result;
+		}
+		return null;
+	}
 }

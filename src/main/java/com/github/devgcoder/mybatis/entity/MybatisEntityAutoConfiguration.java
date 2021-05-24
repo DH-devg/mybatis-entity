@@ -22,10 +22,10 @@ public class MybatisEntityAutoConfiguration {
 		this.mybatisEntityConfig = mybatisEntityConfig;
 	}
 
-	@Bean
-	public MybatisEntityPlugin mybatisEntityPlugin() {
-		return new MybatisEntityPlugin();
-	}
+//	@Bean
+//	public MybatisEntityPlugin mybatisEntityPlugin() {
+//		return new MybatisEntityPlugin();
+//	}
 
 	@Bean
 	public MybatisEntityService mybatisEntityService() {

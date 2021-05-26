@@ -80,6 +80,69 @@
      }
     }
 
+### SQL热更新DEMO
+      com.github.devgcoder.demo.user.entity (yml配置) 下面编写Mapper文件,例如：
+        
+      import com.github.devgcoder.mybatis.entity.annos.CacheDelete;
+      import com.github.devgcoder.mybatis.entity.annos.CacheInsert;
+      import com.github.devgcoder.mybatis.entity.annos.CacheMapper;
+      import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
+      import com.github.devgcoder.mybatis.entity.annos.CacheUpdate;
+      
+      /**
+       * @author duheng
+       * @Date 2021/5/22 16:58
+       */
+      @CacheMapper
+      public interface CacheUser {
+      
+      	@CacheSelect(sql = "select t.* from user t where t.name = '@{name}' order by id desc")
+      	void selectUser();
+      
+      	@CacheInsert(sql = "insert into user(name,age) Values ('@{name}',@{age}),('@{name1}',@{age1})")
+      	void insertUser();
+      
+      	@CacheUpdate(sql = "update user set age=@{age} where name = '@{name}'")
+      	void updateUser();
+      
+      	@CacheDelete(sql = "delete from user where name = '@{name}'")
+      	void deleteUser();
+      
+      	@CacheDelete(sql = "delete from user")
+      	void deleteAll();
+      }
+      
+      编写测试类：
+      
+      @Import(MyImport.class)
+      @RunWith(SpringRunner.class)
+      @SpringBootTest
+      public class ApplicatioinTest {
+      	@Autowired
+      	private MybatisEntityService mybatisEntityService;
+      
+      	@Test
+      	public void testEntity() {
+      		Map<String, Object> cacheMap = new HashMap();
+      		cacheMap.put("name", "李四");
+      		List<Map<String, Object>> cacheMapList = mybatisEntityService.selectCacheMapList(cacheMap, CacheUser.class, "selectUser");
+      		System.out.println();
+      	}
+      }
+      
+      结果如下：
+      10:28:43.223 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==>  Preparing: select t.* from user t where t.name = '李四' order by id desc 
+      10:28:43.543 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==> Parameters: 
+      10:28:43.810 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - <==      Total: 1
+
+
+      此时：E:/tmp/mybatis-entity (yml配置) 已生成如下文件，如果需要修改sql，只需要修改对应的sql文件即可
+      com.github.devgcoder.demo.user.entity.CacheUser_selectUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_insertUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_updateUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_deleteUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_deleteAll.sql
+
 ## 代码编写
 ### 注解介绍
    
@@ -145,70 +208,6 @@
 
 ### 测试类编写
 #### 用MybatisEntityMapper的地方用MybatisEntityService 同样可以
-
-#### 热更新操作
-      com.github.devgcoder.demo.user.entity (yml配置) 下面编写Mapper文件,例如：
-        
-      import com.github.devgcoder.mybatis.entity.annos.CacheDelete;
-      import com.github.devgcoder.mybatis.entity.annos.CacheInsert;
-      import com.github.devgcoder.mybatis.entity.annos.CacheMapper;
-      import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
-      import com.github.devgcoder.mybatis.entity.annos.CacheUpdate;
-      
-      /**
-       * @author duheng
-       * @Date 2021/5/22 16:58
-       */
-      @CacheMapper
-      public interface CacheUser {
-      
-      	@CacheSelect(sql = "select t.* from user t where t.name = '@{name}' order by id desc")
-      	void selectUser();
-      
-      	@CacheInsert(sql = "insert into user(name,age) Values ('@{name}',@{age}),('@{name1}',@{age1})")
-      	void insertUser();
-      
-      	@CacheUpdate(sql = "update user set age=@{age} where name = '@{name}'")
-      	void updateUser();
-      
-      	@CacheDelete(sql = "delete from user where name = '@{name}'")
-      	void deleteUser();
-      
-      	@CacheDelete(sql = "delete from user")
-      	void deleteAll();
-      }
-      
-      编写测试类：
-      
-      @Import(MyImport.class)
-      @RunWith(SpringRunner.class)
-      @SpringBootTest
-      public class ApplicatioinTest {
-      	@Autowired
-      	private MybatisEntityService mybatisEntityService;
-      
-      	@Test
-      	public void testEntity() {
-      		Map<String, Object> cacheMap = new HashMap();
-      		cacheMap.put("name", "李四");
-      		List<Map<String, Object>> cacheMapList = mybatisEntityService.selectCacheMapList(cacheMap, CacheUser.class, "selectUser");
-      		System.out.println();
-      	}
-      }
-      
-      结果如下：
-      10:28:43.223 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==>  Preparing: select t.* from user t where t.name = '李四' order by id desc 
-      10:28:43.543 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==> Parameters: 
-      10:28:43.810 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - <==      Total: 1
-
-
-      此时：E:/tmp/mybatis-entity (yml配置) 已生成如下文件，如果需要修改sql，只需要修改对应的sql文件即可
-      com.github.devgcoder.demo.user.entity.CacheUser_selectUser.sql
-      com.github.devgcoder.demo.user.entity.CacheUser_insertUser.sql
-      com.github.devgcoder.demo.user.entity.CacheUser_updateUser.sql
-      com.github.devgcoder.demo.user.entity.CacheUser_deleteUser.sql
-      com.github.devgcoder.demo.user.entity.CacheUser_deleteAll.sql
-
 #### 添加实体数据（insertEntity）
      
      @RunWith(SpringRunner.class)

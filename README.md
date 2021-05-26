@@ -1,9 +1,10 @@
 # MyBatis Entity
 # 简介
-    MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，底层由MyBatis执行器执行，简化CURD的开发，不影响原有MyBatis的使用，提升开发效率。
-
+    MyBatis Entity 是一个基于MyBatis开发的实体对象操作插件，底层由MyBatis执行器执行，简化CURD的开发，支持sql热更新，对MyBatis只做增强不做改变，提升开发效率。
+     
 # 快速开始    
-    开始前需先熟悉 springboot，mybatis。   
+    开始前需先熟悉 springboot，mybatis。 
+
 ## 初始化工程
     创建一个空的 Spring Boot 工程 
     可参考完整版本demo：  https://github.com/devgcoder/mybatis-entity-springboot-demo
@@ -42,10 +43,35 @@
         url: jdbc:mysql://localhost:3306/mybatis-entity?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
         driver-class-name: com.mysql.cj.jdbc.Driver
 
+    #  热更新配置
+    devg:
+      mybatisentity:
+        base-package: com.github.devgcoder.demo.user.entity    # mapper配置包名
+        cache-dir: E:/tmp/mybatis-entity                       # 文件缓存地址
+        cache-second: 10                                       # 缓存时长 (间隔多长时间加载有变更的文件)
+        
+### 新增ImportSeletor
+
+      import org.springframework.context.annotation.ImportSelector;
+      import org.springframework.core.type.AnnotationMetadata;
+      
+      /**
+       * @author duheng
+       * @Date 2021/5/24 15:46
+       */
+      public class MyImport implements ImportSelector {
+      
+      	@Override
+      	public String[] selectImports(AnnotationMetadata annotationMetadata) {
+      		return new String[]{"com.github.devgcoder.mybatis.entity.MybatisEntityPlugin"};
+      	}
+      }
+        
 ### springboot 启动类配置
          
     增加 @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
 
+    @Import(MyImport.class)
     @MapperScan(basePackages = {"com.github.devgcoder.mybatis.entity.mapper"})
     @SpringBootApplication
     public class Applicatioin {
@@ -119,6 +145,70 @@
 
 ### 测试类编写
 #### 用MybatisEntityMapper的地方用MybatisEntityService 同样可以
+
+#### 热更新操作
+      com.github.devgcoder.demo.user.entity (yml配置) 下面编写Mapper文件,例如：
+        
+      import com.github.devgcoder.mybatis.entity.annos.CacheDelete;
+      import com.github.devgcoder.mybatis.entity.annos.CacheInsert;
+      import com.github.devgcoder.mybatis.entity.annos.CacheMapper;
+      import com.github.devgcoder.mybatis.entity.annos.CacheSelect;
+      import com.github.devgcoder.mybatis.entity.annos.CacheUpdate;
+      
+      /**
+       * @author duheng
+       * @Date 2021/5/22 16:58
+       */
+      @CacheMapper
+      public interface CacheUser {
+      
+      	@CacheSelect(sql = "select t.* from user t where t.name = '@{name}' order by id desc")
+      	void selectUser();
+      
+      	@CacheInsert(sql = "insert into user(name,age) Values ('@{name}',@{age}),('@{name1}',@{age1})")
+      	void insertUser();
+      
+      	@CacheUpdate(sql = "update user set age=@{age} where name = '@{name}'")
+      	void updateUser();
+      
+      	@CacheDelete(sql = "delete from user where name = '@{name}'")
+      	void deleteUser();
+      
+      	@CacheDelete(sql = "delete from user")
+      	void deleteAll();
+      }
+      
+      编写测试类：
+      
+      @Import(MyImport.class)
+      @RunWith(SpringRunner.class)
+      @SpringBootTest
+      public class ApplicatioinTest {
+      	@Autowired
+      	private MybatisEntityService mybatisEntityService;
+      
+      	@Test
+      	public void testEntity() {
+      		Map<String, Object> cacheMap = new HashMap();
+      		cacheMap.put("name", "李四");
+      		List<Map<String, Object>> cacheMapList = mybatisEntityService.selectCacheMapList(cacheMap, CacheUser.class, "selectUser");
+      		System.out.println();
+      	}
+      }
+      
+      结果如下：
+      10:28:43.223 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==>  Preparing: select t.* from user t where t.name = '李四' order by id desc 
+      10:28:43.543 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - ==> Parameters: 
+      10:28:43.810 [main] DEBUG c.g.d.m.e.m.M.selectCacheMapList - <==      Total: 1
+
+
+      此时：E:/tmp/mybatis-entity (yml配置) 已生成如下文件，如果需要修改sql，只需要修改对应的sql文件即可
+      com.github.devgcoder.demo.user.entity.CacheUser_selectUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_insertUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_updateUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_deleteUser.sql
+      com.github.devgcoder.demo.user.entity.CacheUser_deleteAll.sql
+
 #### 添加实体数据（insertEntity）
      
      @RunWith(SpringRunner.class)
